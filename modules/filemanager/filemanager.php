@@ -1,22 +1,33 @@
 <?php
 
+
+
+
 require('services/NameGenerator.php');
+require('StorageEngine.php');
+require('DatabaseConnector.php');
+
+require_once 'models/Model.php';
+require_once 'models/FileModel.php';
+
 
 class FileManager {
 
-    private static $instance;
+    public $dbConnection;
 
-    public function get() {
-        if( empty(self::$instance)) {
-            self::$instance = new self();
-        }
-        return self::$instance;
+    public function __construct() {
+        $this->dbConnection = new DatabaseConnector();
     }
 
     public function run() {
 
+        $model = new Model();
 
-
+//        $inputFiles = $this->getFiles();
+//
+//        foreach($inputFiles as $file) {
+//            $this->processFile($file);
+//        }
     }
 
     public function processFile($filename) {

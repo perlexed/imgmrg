@@ -1,6 +1,6 @@
 <?php
 
-require('modules/FileManager/FileManager.php');
+require_once 'bootstrap.php';
 
 $fileManager = new FileManager();
 

@@ -3,8 +3,5 @@
 
 class StorageEngine {
 
-    public function save() {
-
-    }
 
 }
