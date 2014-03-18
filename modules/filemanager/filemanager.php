@@ -1,13 +1,11 @@
 <?php
 
-
-
-
 require('services/NameGenerator.php');
 require('StorageEngine.php');
-require('DatabaseConnector.php');
+require('connectors/BaseConnector.php');
+require('connectors/DatabaseConnector.php');
 
-require_once 'models/Model.php';
+require_once 'models/BaseModel.php';
 require_once 'models/FileModel.php';
 
 
@@ -17,11 +15,14 @@ class FileManager {
 
     public function __construct() {
         $this->dbConnection = new DatabaseConnector();
+
     }
 
     public function run() {
 
-        $model = new Model();
+        $model = new FileModel();
+
+        $model->save('asdasd');
 
 //        $inputFiles = $this->getFiles();
 //
