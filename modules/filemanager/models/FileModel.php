@@ -2,10 +2,10 @@
 
 class FileModel extends BaseModel {
 
-    public function save($saveData) {
-        echo $saveData;
-        $STH = $this->dataSource->prepare("INSERT INTO `files_history`(`sourceName`, `guid`, `name`, `extension`) VALUES ('qwe','asd','zxc','wer')");
-        $STH->execute();
+    public function save($sourceFileName, $uidFileName, $fileExtension) {
+
+        $STH = $this->dataSource->prepare("INSERT INTO `files_history`(`sourceName`, `uid`, `extension`) VALUES (?, ?, ?)");
+        $STH->execute(array($sourceFileName, $uidFileName, $fileExtension));
     }
 
 }

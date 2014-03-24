@@ -12,7 +12,7 @@ class NameGenerator {
 
     /**
      * Generating random string with given length
-     * @param null $nameLength
+     * @param int|null $nameLength
      * @return string
      */
     public static function getRandomString($nameLength = null) {
