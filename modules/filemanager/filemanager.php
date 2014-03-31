@@ -1,6 +1,7 @@
 <?php
 
 require('services/NameGenerator.php');
+require('services/ImageProcessor.php');
 require('StorageEngine.php');
 require('connectors/BaseConnector.php');
 require('connectors/DatabaseConnector.php');
@@ -12,7 +13,14 @@ require_once 'models/FileModel.php';
 class FileManager {
 
     public function run() {
-        $this->processBatch();
+//        $this->processBatch();
+
+        $imgProcessor = new ImageProcessor();
+        header('Content-Type: image/jpeg');
+        header('Content-Length: ' . filesize(IMG_TEMP_DIR . DS . 'img_jpg_normal.jpg'));
+        $imgProcessor->load(IMG_TEMP_DIR . DS . 'img_jpg_normal.jpg');
+        $imgProcessor->output();
+
     }
 
     public function processBatch() {
