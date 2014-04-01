@@ -16,10 +16,11 @@ class FileManager {
 //        $this->processBatch();
 
         $imgProcessor = new ImageProcessor();
-        header('Content-Type: image/jpeg');
-        header('Content-Length: ' . filesize(IMG_TEMP_DIR . DS . 'img_jpg_normal.jpg'));
         $imgProcessor->load(IMG_TEMP_DIR . DS . 'img_jpg_normal.jpg');
-        $imgProcessor->output();
+        $imgProcessor->makeThumbnail();
+//        header('Content-Type: image/jpeg');
+//        header('Content-Length: ' . filesize(IMG_TEMP_DIR . DS . 'img_jpg_normal.jpg'));
+//        $imgProcessor->output();
 
     }
 

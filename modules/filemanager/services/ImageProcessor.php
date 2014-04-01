@@ -28,6 +28,37 @@ class ImageProcessor {
             $this->image = imagecreatefrompng($filename);
         }
     }
+
+    public function makeThumbnail () {
+        $thumbnailHeight = 100;
+        $thumbnailWidth = 100;
+
+        $thumbnailRatio = $thumbnailWidth / $thumbnailHeight;
+
+        $imageHeight = imagesy($this->image);
+        $imageWidth = imagesx($this->image);
+
+        $coordinateX = $coordinateY = 0;
+
+        // If target image should be from right/left
+        if($thumbnailRatio < $imageWidth / $imageHeight) {
+            $croppedImageHeight = $imageHeight;
+            $croppedImageWidth = round($imageHeight * $thumbnailRatio);
+            $coordinateX = round($imageWidth / 2) - round($croppedImageWidth / 2);
+        // If target image should be cut from top/bottom
+        } else {
+            $croppedImageWidth = $imageWidth;
+            $croppedImageHeight = round($imageWidth / $thumbnailRatio);
+            $coordinateY = round($imageHeight / 2) - round($croppedImageHeight / 2);
+        }
+
+        $thumbnailImage = imagecreatetruecolor( $thumbnailWidth, $thumbnailHeight);
+        imagecopyresized($thumbnailImage, $this->image, 0, 0, $coordinateX, $coordinateY, $thumbnailWidth, $thumbnailHeight, $croppedImageWidth, $croppedImageHeight );
+
+        header('Content-Type: image/jpeg');
+        imagejpeg($thumbnailImage);
+    }
+
     function save($filename, $image_type=IMAGETYPE_JPEG, $compression=75, $permissions=null) {
         if( $image_type == IMAGETYPE_JPEG ) {
             imagejpeg($this->image,$filename,$compression);
@@ -40,6 +71,7 @@ class ImageProcessor {
             chmod($filename,$permissions);
         }
     }
+
     function output($image_type=IMAGETYPE_JPEG) {
         if( $image_type == IMAGETYPE_JPEG ) {
             imagejpeg($this->image);
