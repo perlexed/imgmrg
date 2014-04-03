@@ -7,8 +7,8 @@
  */
 class NameGenerator {
 
-    public static $length = 5;
-    private static $charList = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const LENGTH = 5;
+    private static $charList = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     /**
      * Generating random string with given length
@@ -17,7 +17,7 @@ class NameGenerator {
      */
     public static function getRandomString($nameLength = null) {
 
-        $nameLength = $nameLength ? (int) $nameLength : self::$length;
+        $nameLength = $nameLength ? (int) $nameLength : self::LENGTH;
         $outputString = '';
 
         for($i = 0; $i < $nameLength; $i++) {

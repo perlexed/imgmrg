@@ -7,3 +7,6 @@ $GLOBALS['fileManager'] = $fileManager;
 
 $fileManager->run();
 
+//ob_start();
+//include 'client/imageList.php';
+//ob_flush();

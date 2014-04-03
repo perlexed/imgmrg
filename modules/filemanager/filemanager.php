@@ -7,20 +7,26 @@ require('connectors/BaseConnector.php');
 require('connectors/DatabaseConnector.php');
 
 require_once 'models/BaseModel.php';
-require_once 'models/FileModel.php';
+require_once 'models/ImageModel.php';
 
 
 class FileManager {
 
     public function run() {
-//        $this->processBatch();
 
-        $imgProcessor = new ImageProcessor();
-        $imgProcessor->load(IMG_TEMP_DIR . DS . 'img_jpg_normal.jpg');
-        $imgProcessor->makeThumbnail();
-//        header('Content-Type: image/jpeg');
-//        header('Content-Length: ' . filesize(IMG_TEMP_DIR . DS . 'img_jpg_normal.jpg'));
-//        $imgProcessor->output();
+        $fileModel = new ImageModel();
+        $fileModel->setAttributes(array(
+            'uid' => 'qweqwe',
+            'fileinfo' => 'asdasd',
+            'sourceFilename' => 'zxczxc',
+        ));
+
+//        $fileModel->save();
+
+
+//        $imgProcessor = new ImageProcessor();
+//        $imgProcessor->load(IMG_TEMP_DIR . DS . 'img_jpg_normal.jpg');
+//        $imgProcessor->makeThumbnail();
 
     }
 
@@ -47,18 +53,24 @@ class FileManager {
      */
     public function processFile($fileName, $directory = IMG_TEMP_DIR) {
 
-        $uidFileName = 'i' . NameGenerator::getRandomString(5);
+        $uid = NameGenerator::getRandomString(5);
+        $uidFileName = 'i' . $uid;
 
-        $fileInfo = pathinfo($directory . DS . $fileName);
-        $newName = $uidFileName . '.' . $fileInfo['extension'];
+        $fileinfo = pathinfo($directory . DS . $fileName);
+        $newName = $uidFileName . '.' . $fileinfo['extension'];
 
         // @todo envelope rename into try/catch statement
-//        $renameSuccessful = rename($directory . DS . $filename, IMG_STORE_DIR . DS . $newName);
+//        $renameSuccessful = rename($directory . DS . $fileName, IMG_STORE_DIR . DS . $newName);
         $renameSuccessful = true;
 
         if($renameSuccessful) {
-            $fileModel = new FileModel();
-            $fileModel->save($fileName, $uidFileName, $fileInfo['extension']);
+            $fileModel = new ImageModel();
+            $fileModel->setAttributes(array(
+                'uid' => $uid,
+                'fileinfo' => pathinfo(IMG_STORE_DIR . DS . $newName),
+                'sourceFilename' => $fileName,
+            ));
+            $fileModel->save();
         }
     }
 }
